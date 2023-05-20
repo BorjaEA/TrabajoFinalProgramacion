@@ -1,7 +1,7 @@
 package mapa;
 
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -18,8 +18,10 @@ public class Funciones {
 	  char[][] mapa = generarMapa(numSalas, tamanoArray);
 	  //char[][] mapaConCuadrados = generarMapaConCuadrados(mapa);
 	  //return quitarCaracterUnionSalas(unirSalas(mapaConCuadrados));
-	  return unirSalas(generarMapaConCuadrados(mapa));
+	  char[][] mapaConSalaUnidas = unirSalas(generarMapaConCuadrados(mapa));
 	  
+
+	  return añadirTiendaEnemigosEscaleraHerrero(mapaConSalaUnidas);
 	}
 
 
@@ -43,7 +45,7 @@ public class Funciones {
 	    // Inicializar el mapa con 'P'
 	    for (int i = 0; i < tamano; i++) {
 	        for (int j = 0; j < tamano; j++) {
-	            mapa[i][j] = 'P';
+	            mapa[i][j] = '░';
 	        }
 	    }
 
@@ -56,7 +58,7 @@ public class Funciones {
 	        int y = rand.nextInt(tamano);
 
 	        // Verificar que no se genera en los bordes
-	        if (x != 0 && y != 0 && x != tamano - 1 && y != tamano - 1 && mapa[x][y] == 'P') {
+	        if (x != 0 && y != 0 && x != tamano - 1 && y != tamano - 1 && mapa[x][y] == '░') {
 	            mapa[x][y] = '·';
 	            numSalasGeneradas++;
 	        }
@@ -76,11 +78,12 @@ public class Funciones {
 	public static char[][] generarMapaConCuadrados(char[][] mapa) {
 	    int filas = mapa.length;
 	    int columnas = mapa[0].length;
-
+	    Random ran = new Random();
+	    
 	    for (int i = 1; i < filas - 1; i++) {
 	        for (int j = 1; j < columnas - 1; j++) {
 	            if (mapa[i][j] == '·') {
-	                int tamano = (int) (Math.random() * 4) + 3; // entre 3 y 6
+	                int tamano = ran.nextInt(3,12); // entre 3 y 12
 	                int esquinaIzquierda = i - tamano / 2;
 	                int esquinaSuperior = j - tamano / 2;
 
@@ -111,20 +114,152 @@ public class Funciones {
 	 *
 	 * @param mapa El array de salida de "generarMapaConCuadrados()" que contiene los cuadrados generados.
 	 */
-	public static char[][] unirSalas(char[][] array) {
+	public static char[][] unirSalas(char[][] mapa) {
+
+		char[][] mapaResultado = new char[mapa.length][mapa.length];
+		ArrayList<Integer> centros = new ArrayList<Integer>();
 		
-		int
+		for (int i = 0; i < mapa.length; i++) {
+			for (int j = 0; j < mapa[0].length; j++) {
+				mapaResultado [i][j] = mapa[i][j];
+			}
+		}
+		
+		centros = buscarCentrosEnMapa(mapaResultado);
 		
 		
+
 		
 		
+		int [] centro1 = {centros.get(centros.size()/2-1),centros.get(centros.size()/2)};
+		
+		for (int i = 0; i < centros.size(); i +=2) {
+			int [] centro2 = {centros.get(i),centros.get(i+1)};
+			mapaResultado = unir2Posiciones(mapaResultado, centro1 , centro2);
+
+		}
 		
 		
-		return null;
+	
+		return mapaResultado;
 	}
 
+	private static char[][] unir2Posiciones(char[][] mapa, int[] posicion1, int[] posicion2) {
+        int fila1 = posicion1[0];
+        int columna1 = posicion1[1];
+        int fila2 = posicion2[0];
+        int columna2 = posicion2[1];
 
+        mapa[fila1][columna1] = ' '; 
 
+        if (fila2 > fila1) {
+            for (int i = fila1 + 1; i <= fila2; i++) {
+                mapa[i][columna1] = ' '; 
+            }
+        } else if (fila2 < fila1) {
+            for (int i = fila1 - 1; i >= fila2; i--) {
+                mapa[i][columna1] = ' '; 
+            }
+        }
+
+        if (columna2 > columna1) {
+            for (int j = columna1 + 1; j <= columna2; j++) {
+                mapa[fila2][j] = ' '; 
+            }
+        } else if (columna2 < columna1) {
+            for (int j = columna1 - 1; j >= columna2; j--) {
+                mapa[fila2][j] = ' '; 
+            }
+        }
+
+        return mapa;
+    }
+
+	
+	
+	private static ArrayList<Integer> buscarCentrosEnMapa (char[][] mapa){
+		
+		ArrayList<Integer> centros = new ArrayList<Integer>();
+		
+		for (int i = 0; i < mapa.length; i++) {
+			for (int j = 0; j < mapa[0].length; j++) {
+				if(mapa[i][j] == 'O') {
+					centros.add(i);
+					centros.add(j);
+				}
+
+			}
+		}
+		
+		
+		return centros;
+	}
+
+    /**
+     * Añade los elementos "🚪", "😡", "🏠" y "🔨" al mapa en las posiciones adecuadas.
+     *
+     * @param mapa el mapa actual
+     * @return el mapa actualizado
+     */
+    private static char[][] añadirTiendaEnemigosEscaleraHerrero(char[][] mapa) {
+        int filas = mapa.length;
+        int columnas = mapa[0].length;
+        
+        Random ran = new Random();
+
+        // Añadir "🚪" en una posición si hay un espacio vacío
+        int cont = 0;
+        while(cont != 1) {
+        	int posX = ran.nextInt(mapa.length);
+        	int posY = ran.nextInt(mapa.length);
+        	
+            if (mapa[posX][posY] == ' ') {
+            	mapa[posX][posY] = 'S';
+            	cont++;
+            }
+        }
+
+            
+        
+
+        // Añadir "😡" en 7 posiciones si hay espacios vacíos
+        cont = 0;
+        while(cont != 7) {
+        	int posX = ran.nextInt(mapa.length);
+        	int posY = ran.nextInt(mapa.length);
+        	
+            if (mapa[posX][posY] == ' ') {
+            	mapa[posX][posY] = 'E';
+            	cont++;
+            }
+        }
+
+        
+        cont = 0;
+        while(cont != 1) {
+        	int posX = ran.nextInt(mapa.length);
+        	int posY = ran.nextInt(mapa.length);
+        	
+            if (mapa[posX][posY] == ' ') {
+            	mapa[posX][posY] = 'T';
+            	cont++;
+            }
+        }
+
+        
+        cont = 0;
+        while(cont != 1) {
+        	int posX = ran.nextInt(mapa.length);
+        	int posY = ran.nextInt(mapa.length);
+        	
+            if (mapa[posX][posY] == ' ') {
+            	mapa[posX][posY] = 'H';
+            	cont++;
+            }
+        }
+
+        return mapa;
+    }
 
 
 

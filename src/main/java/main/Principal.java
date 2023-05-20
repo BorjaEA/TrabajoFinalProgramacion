@@ -11,12 +11,17 @@ public class Principal {
 		// TODO Auto-generated method stub
 
 		
-			char a[][] = mapa.Funciones.crearNivel(8, 30);
+		char[][]a = mapa.Funciones.crearNivel(20, 50);
 			
-			for (char fila[] : a) {
-				System.out.println(Arrays.toString(fila));
+//			for (char fila[] : a) {
+//				System.out.println(Arrays.toString(fila));
+//			}
+			for (int i = 0; i < a.length; i++) {
+				for (int j = 0; j < a[0].length; j++) {
+					System.out.print(a[i][j] + " ");
+				}
+				System.out.println();
 			}
-			
 
 		}
 
