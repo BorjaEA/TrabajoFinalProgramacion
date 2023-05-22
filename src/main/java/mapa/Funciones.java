@@ -207,7 +207,7 @@ public class Funciones {
         
         Random ran = new Random();
 
-        // Añadir "🚪" en una posición si hay un espacio vacío
+        // Añadir 'S' en una posición si hay un espacio vacío
         int cont = 0;
         while(cont != 1) {
         	int posX = ran.nextInt(mapa.length);
@@ -222,7 +222,7 @@ public class Funciones {
             
         
 
-        // Añadir "😡" en 7 posiciones si hay espacios vacíos
+        // Añadir 'E' en 7 posiciones si hay espacios vacíos
         cont = 0;
         while(cont != 7) {
         	int posX = ran.nextInt(mapa.length);
