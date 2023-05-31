@@ -1,6 +1,8 @@
 package config;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -15,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
+
+import excepciones.NoSeEncuentraSave;
 
 public class BaseDeDatos {
 	public static final String cadenaConexion = "jdbc:mysql://localhost/depthofdespair";
@@ -164,28 +168,39 @@ public class BaseDeDatos {
 
 		return id;
 	}
+
 	public static boolean comprobarContraseña(String nombre, String contraseña) {
 		try {
 			Connection connection = DriverManager.getConnection(cadenaConexion, usuarioBD, passBD);
-            String consulta = "SELECT contraseña FROM usuario WHERE nombreDeUsuario = ?";
-            PreparedStatement statement = connection.prepareStatement(consulta);
-            statement.setString(1, nombre);
-            ResultSet resultSet = statement.executeQuery();
-            
-            if (resultSet.next()) {
-                String contraseñaAlmacenada = resultSet.getString("contraseña");
-                statement.close();
-                connection.close();
-                return contraseñaAlmacenada.equals(contraseña);
-            }
-            
-            statement.close();
-            connection.close();
-            return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+			String consulta = "SELECT contraseña FROM usuario WHERE nombreDeUsuario = ?";
+			PreparedStatement statement = connection.prepareStatement(consulta);
+			statement.setString(1, nombre);
+			ResultSet resultSet = statement.executeQuery();
+
+			if (resultSet.next()) {
+				String contraseñaAlmacenada = resultSet.getString("contraseña");
+				statement.close();
+				connection.close();
+				return contraseñaAlmacenada.equals(contraseña);
+			}
+
+			statement.close();
+			connection.close();
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
+
+	public static void comprobarSiExisteSave() throws NoSeEncuentraSave {
+
+		try {
+			FileReader reader = new FileReader("./Partidas guardadas/save.txt");
+		} catch (FileNotFoundException e) {
+			throw new NoSeEncuentraSave("No se ha encontrado partida guardada");
+		}
 	
+	}
+
 }

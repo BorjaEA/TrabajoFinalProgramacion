@@ -118,6 +118,12 @@ public class PantallaInicio extends JPanel{
 
 		
 		JButton Salir = new JButton("<html><u><br>Salir<u/><html/>");
+		Salir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
 		Salir.setFont(Ventana.fuente);
 		Salir.setForeground(new Color(139,0,0));
 		GridBagConstraints gbc_Salir = new GridBagConstraints();

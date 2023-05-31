@@ -55,7 +55,7 @@ public class Ventana extends JFrame {
 		}
 		
 		
-		this.setLocationRelativeTo(null);
+		this.setLocation(200,100);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(1400,800);
 		this.setResizable(true);
@@ -106,6 +106,8 @@ public class Ventana extends JFrame {
 	        e.printStackTrace();
 	    }
 	}
+	
+	
 	
 
 
