@@ -80,6 +80,27 @@ public class Partida {
         }
 		
 	}
+	public String devolverMapa() {
+		
+		String salida = "";
+		
+		for (int i = 0; i < mapa.mapa.length; i++) {
+			for (int j = 0; j <  mapa.mapa[0].length; j++) {
+				if(mapa.mapa[i][j].getLetra() == '░') {
+					salida +=  mapa.mapa[i][j].getLetra()+ " ";
+				}else if( mapa.mapa[i][j].getLetra() == ' ') {
+					salida +=  mapa.mapa[i][j].getLetra() + "    ";
+				}else {
+					salida +=  mapa.mapa[i][j].getLetra() + "  ";
+				}
+				
+			}
+			salida += "\n";
+		}
+		return salida;
+
+		
+	}
 	
 	
 }

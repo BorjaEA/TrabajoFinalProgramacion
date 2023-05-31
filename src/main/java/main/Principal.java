@@ -37,21 +37,17 @@ public class Principal {
 		// TODO Auto-generated method stub
 
 		
-		char[][]a = mapa.Funciones.crearNivel(20, 50);
-		Mapa mapa = new Mapa(a);
-
-		Personaje p = new Personaje(0, 0);
-	
-		Partida partida = new Partida(p, mapa);
-
-		partida.guardarAArchivo();
+//		char[][]a = mapa.Funciones.crearNivel(20, 50);
+//		Mapa mapa = new Mapa(a);
+//
+//		Personaje p = new Personaje(0, 0);
+//	
+//		Partida partida = new Partida(p, mapa);
+//
+//		partida.guardarAArchivo();
 //
 //		Partida partida2 = new Partida();
-//		System.out.println();
-//		System.out.println();
-//		System.out.println();
-//		System.out.println(partida2.mapa.toString());
-		
+
 
 		
 

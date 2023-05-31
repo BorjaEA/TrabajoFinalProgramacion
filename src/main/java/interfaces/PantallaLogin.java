@@ -3,6 +3,8 @@ package interfaces;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
@@ -18,12 +20,15 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+
+import config.BaseDeDatos;
+
 import javax.swing.UIManager;
 
 public class PantallaLogin extends JPanel{
 	private Ventana ventana;
-	private JTextField textField_1;
-	private JTextField textField;
+	private JTextField campoContraseña;
+	private JTextField campoNombre;
 	
 	public PantallaLogin(Ventana v) {
 		this.ventana=v;
@@ -53,14 +58,14 @@ public class PantallaLogin extends JPanel{
 		gbc_lblNewLabel.gridy = 2;
 		add(lblNewLabel, gbc_lblNewLabel);
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 3;
-		gbc_textField.gridy = 2;
-		add(textField, gbc_textField);
-		textField.setColumns(10);
+		campoNombre = new JTextField();
+		GridBagConstraints gbc_campoNombre = new GridBagConstraints();
+		gbc_campoNombre.insets = new Insets(0, 0, 5, 5);
+		gbc_campoNombre.fill = GridBagConstraints.HORIZONTAL;
+		gbc_campoNombre.gridx = 3;
+		gbc_campoNombre.gridy = 2;
+		add(campoNombre, gbc_campoNombre);
+		campoNombre.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Contraseña");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -71,16 +76,29 @@ public class PantallaLogin extends JPanel{
 		gbc_lblNewLabel_1.gridy = 3;
 		add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 3;
-		gbc_textField_1.gridy = 3;
-		add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		campoContraseña = new JTextField();
+		GridBagConstraints gbc_campoContraseña = new GridBagConstraints();
+		gbc_campoContraseña.insets = new Insets(0, 0, 5, 5);
+		gbc_campoContraseña.fill = GridBagConstraints.HORIZONTAL;
+		gbc_campoContraseña.gridx = 3;
+		gbc_campoContraseña.gridy = 3;
+		add(campoContraseña, gbc_campoContraseña);
+		campoContraseña.setColumns(10);
 		
 		JButton botonIniciarSesion = new JButton("Iniciar Sesion");
+		botonIniciarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if (BaseDeDatos.comprobarUsuario(campoNombre.getText().toString()) && BaseDeDatos.comprobarContraseña(campoNombre.getText().toString(), campoContraseña.getText().toString())) {
+					JOptionPane.showMessageDialog(null, "Se ha iniciado sesion con exito", "DepthsOfDespair", JOptionPane.INFORMATION_MESSAGE);
+					ventana.cambiarAPantalla(PantallaJuego.class);
+				}else {
+					JOptionPane.showMessageDialog(null, "Hubo un problema al iniciar sesion \nNombre de usuario o contraseña incorrecta", "DepthsOfDespair", JOptionPane.INFORMATION_MESSAGE);
+				}
+
+			}
+		});
 		GridBagConstraints gbc_botonIniciarSesion = new GridBagConstraints();
 		gbc_botonIniciarSesion.insets = new Insets(0, 0, 5, 5);
 		gbc_botonIniciarSesion.gridx = 3;

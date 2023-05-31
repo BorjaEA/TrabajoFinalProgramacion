@@ -19,9 +19,9 @@ public class PantallaElegirLoginORegistrarse extends JPanel{
 		this.ventana=v;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JButton Login = new JButton("<html><center><u><br>Iniciar Sesion</center></html>");
@@ -63,6 +63,28 @@ public class PantallaElegirLoginORegistrarse extends JPanel{
 		SignIn.setContentAreaFilled(false);
 		SignIn.setBorderPainted(false);
 		SignIn.setFocusPainted(false);
+		
+		JButton Atras = new JButton("<html><center><u><br>Atras</center></html>");
+		GridBagConstraints gbc_Atras = new GridBagConstraints();
+		gbc_Atras.insets = new Insets(0, 0, 5, 5);
+		gbc_Atras.gridx = 2;
+		gbc_Atras.gridy = 4;
+		add(Atras, gbc_Atras);
+		
+		Atras.setFont(ventana.fuente);
+		Atras.setForeground(new Color(139,0,0));
+		
+		Atras.setOpaque(false);
+		Atras.setContentAreaFilled(false);
+		Atras.setBorderPainted(false);
+		Atras.setFocusPainted(false);
+		
+		Atras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ventana.cambiarAPantalla(PantallaNuevaPartida.class);
+			}
+		});
 		
 	}
 	@Override

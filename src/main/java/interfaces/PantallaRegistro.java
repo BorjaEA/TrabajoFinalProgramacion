@@ -95,7 +95,7 @@ public class PantallaRegistro extends JPanel{
 					datosAIntroducir.add(campoContraseña.getText().toString());
 					BaseDeDatos.insertar("usuario", datosAIntroducir);
 					JOptionPane.showMessageDialog(null, "Se creo el usuario de manera correcta", "DepthsOfDespair", JOptionPane.INFORMATION_MESSAGE);
-					ventana.cambiarAPantalla(PantallaElegirLoginORegistrarse.class);
+					ventana.cambiarAPantalla(PantallaJuego.class);
 					
 				}else {
 					JOptionPane.showMessageDialog(null, "Hubo un problema al crear el usuario \nEl usuario ya existe", "DepthsOfDespair", JOptionPane.INFORMATION_MESSAGE);

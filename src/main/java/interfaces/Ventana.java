@@ -8,7 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import javax.swing.JFrame;
 
 public class Ventana extends JFrame {
@@ -17,7 +21,9 @@ public class Ventana extends JFrame {
 	public static BufferedImage fondo;
 	
 	public Ventana() {
-		
+
+		reproducirMusica();
+
 		if(Ventana.fondo == null) {
 			try {
 				Ventana.fondo = ImageIO.read(new File("./src/main/java/imagenes/desktop-1920x1080.jpg"));
@@ -74,6 +80,8 @@ public class Ventana extends JFrame {
 			this.setContentPane(new PantallaNuevaPartida(this));
 		}else if(destino.equals(PantallaElegirLoginORegistrarse.class)) {
 			this.setContentPane(new PantallaElegirLoginORegistrarse(this));
+		}else if(destino.equals(PantallaJuego.class)) {
+			this.setContentPane(new PantallaJuego(this));
 		}
 		
 		
@@ -82,5 +90,25 @@ public class Ventana extends JFrame {
 		
 		this.getContentPane().setVisible(true);
 	}
+	
+	private static void reproducirMusica() {
+	    try {
+	        // Carga el archivo de audio
+	        File archivoMusica = new File("./musica/Spider Dance.wav");
+	        
+	        // Crea un objeto Clip y abre el archivo de audio
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(AudioSystem.getAudioInputStream(archivoMusica));
+	        
+	        // Reproduce la música en bucle
+	        clip.loop(Clip.LOOP_CONTINUOUSLY);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+
+
+
 
 }

@@ -164,5 +164,28 @@ public class BaseDeDatos {
 
 		return id;
 	}
-
+	public static boolean comprobarContraseña(String nombre, String contraseña) {
+		try {
+			Connection connection = DriverManager.getConnection(cadenaConexion, usuarioBD, passBD);
+            String consulta = "SELECT contraseña FROM usuario WHERE nombreDeUsuario = ?";
+            PreparedStatement statement = connection.prepareStatement(consulta);
+            statement.setString(1, nombre);
+            ResultSet resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+                String contraseñaAlmacenada = resultSet.getString("contraseña");
+                statement.close();
+                connection.close();
+                return contraseñaAlmacenada.equals(contraseña);
+            }
+            
+            statement.close();
+            connection.close();
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+	}
+	
 }

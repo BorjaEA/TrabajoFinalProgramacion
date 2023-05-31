@@ -34,6 +34,7 @@ public class PantallaNuevaPartida extends JPanel {
 		PartidaLocal.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ventana.cambiarAPantalla(PantallaJuego.class);
 			}
 		});
 		GridBagConstraints gbc_PartidaLocal = new GridBagConstraints();

@@ -96,6 +96,12 @@ public class PantallaInicio extends JPanel{
 		NuevaPartida.setFocusPainted(false);
 		
 		JButton ContinuarPartida = new JButton("<html><center><u><br>Continuar<u/><br>Partida</center></html>");
+		ContinuarPartida.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ventana.cambiarAPantalla(PantallaJuego.class);
+			}
+		});
 		ContinuarPartida.setFont(Ventana.fuente);
 		ContinuarPartida.setForeground(new Color(139,0,0));
 		GridBagConstraints gbc_ContinuarPartida = new GridBagConstraints();
