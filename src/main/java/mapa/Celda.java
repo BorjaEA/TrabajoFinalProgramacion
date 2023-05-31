@@ -153,7 +153,9 @@ public class Celda {
 			this.letra = 'T';
 		}else if(this.herrero != null) {
 			this.letra = 'H';
-		}	
+		}else {
+			this.letra = ' ';
+		}
 		
 	}
 	@Override

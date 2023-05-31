@@ -83,7 +83,7 @@ public class Funciones {
 	    for (int i = 1; i < filas - 1; i++) {
 	        for (int j = 1; j < columnas - 1; j++) {
 	            if (mapa[i][j] == '·') {
-	                int tamano = ran.nextInt(3,12); // entre 3 y 12
+	                int tamano = ran.nextInt(5,15); // entre 5 y 15
 	                int esquinaIzquierda = i - tamano / 2;
 	                int esquinaSuperior = j - tamano / 2;
 

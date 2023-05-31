@@ -72,65 +72,67 @@ public class Partida {
 
 	}
 
-	public Partida moverJugador(int dirrecion, Partida p) {
-		//0 -> arriba
-		//1 -> derecha
-		//2 -> abajo
-		//3 -> izquierda
+	public static Partida moverJugador(int dirrecion, Partida p) {
+		// 0 -> arriba
+		// 1 -> derecha
+		// 2 -> abajo
+		// 3 -> izquierda
 		Partida salida = p;
+		
+		int posXoriginal = p.personaje.getPosicionX();
+		int posYoriginal = p.personaje.getPosicionY();
 		
 		switch (dirrecion) {
 		case 0 -> {
 			salida = moverJugadorAux(p, p.personaje.getPosicionX(), p.personaje.getPosicionY() - 1);
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()].setJugador(null);
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()- 1].setJugador(salida.personaje);
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()].setLetra();
+			if(salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY() - 1].getLetra() != '░') {
+				salida = moverJugardorAux2(posXoriginal, posYoriginal, salida);
+			}
 			
-
-
 		}
 		case 1 -> {
-			salida = moverJugadorAux(p, p.personaje.getPosicionX()+ 1, p.personaje.getPosicionY() );
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()].setJugador(null);
-			salida.mapa.mapa[p.personaje.getPosicionX()+ 1][p.personaje.getPosicionY()].setJugador(salida.personaje);
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()].setLetra();
-			
-
+			salida = moverJugadorAux(p, p.personaje.getPosicionX() + 1, p.personaje.getPosicionY());
+			if(salida.mapa.mapa[p.personaje.getPosicionX() + 1][p.personaje.getPosicionY() ].getLetra() != '░') {
+				salida = moverJugardorAux2(posXoriginal, posYoriginal, salida);
+			}
 		}
 		case 2 -> {
-			salida = moverJugadorAux(p, p.personaje.getPosicionX() , p.personaje.getPosicionY() + 1);
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()].setJugador(null);
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()+ 1].setJugador(salida.personaje);
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()].setLetra();
-
+			salida = moverJugadorAux(p, p.personaje.getPosicionX(), p.personaje.getPosicionY() + 1);
+			if(salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY() + 1].getLetra() != '░') {
+				salida = moverJugardorAux2(posXoriginal, posYoriginal, salida);
+			}
 		}
 		case 3 -> {
-			salida = moverJugadorAux(p, p.personaje.getPosicionX()-1, p.personaje.getPosicionY() );
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()].setJugador(null);
-			salida.mapa.mapa[p.personaje.getPosicionX()- 1][p.personaje.getPosicionY()].setJugador(salida.personaje);
-			salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY()].setLetra();
-			
-			
+			salida = moverJugadorAux(p, p.personaje.getPosicionX() - 1, p.personaje.getPosicionY());
+			if(salida.mapa.mapa[p.personaje.getPosicionX() - 1][p.personaje.getPosicionY()].getLetra() != '░') {
+				salida = moverJugardorAux2(posXoriginal, posYoriginal, salida);
+			}
 		}
-		
 
-		
 		}
 		return salida;
-		
-		
-		
+
 	}
 
-	private Partida moverJugadorAux(Partida p, int x, int y) {
+	private static Partida moverJugadorAux(Partida p, int x, int y) {
 		Partida salida = p;
-		
-		if(p.mapa.mapa[x][y].getLetra() != '░') {
+
+		if (p.mapa.mapa[x][y].getLetra() != '░') {
 			salida.mapa.mapa[x][y].setLetra('J');
 			salida.personaje = p.personaje;
 			salida.personaje.setPosicionX(x);
 			salida.personaje.setPosicionY(y);
 		}
+		return salida;
+	}
+	
+	private static Partida moverJugardorAux2(int x, int y, Partida p) {
+		Partida salida = p;
+		
+		salida.mapa.mapa[x][y].setJugador(null);
+		salida.mapa.mapa[x][y].setLetra();
+
+		
 		
 		return salida;
 	}
@@ -174,19 +176,20 @@ public class Partida {
 
 		for (int i = 0; i < mapa.mapa.length; i++) {
 			for (int j = 0; j < mapa.mapa[0].length; j++) {
-				if (mapa.mapa[i][j].getLetra() == '░') {
-					salida += mapa.mapa[i][j].getLetra() + " ";
-				} else if (mapa.mapa[i][j].getLetra() == ' ') {
-					salida += mapa.mapa[i][j].getLetra() + "    ";
-				} else if (mapa.mapa[i][j].getLetra() == 'J') {
-					salida += mapa.mapa[i][j].getLetra() + "   ";
-				}else {
-					salida += mapa.mapa[i][j].getLetra() + "  ";
+				if (mapa.mapa[j][i].getLetra() == '░') {
+					salida += mapa.mapa[j][i].getLetra() + " ";
+				} else if (mapa.mapa[j][i].getLetra() == ' ') {
+					salida += mapa.mapa[j][i].getLetra() + "    ";
+				} else if (mapa.mapa[j][i].getLetra() == 'J') {
+					salida += mapa.mapa[j][i].getLetra() + "   ";
+				} else {
+					salida += mapa.mapa[j][i].getLetra() + "  ";
 				}
 
 			}
 			salida += "\n";
 		}
+
 		return salida;
 
 	}

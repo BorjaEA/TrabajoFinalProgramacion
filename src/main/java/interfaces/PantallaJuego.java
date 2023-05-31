@@ -36,7 +36,7 @@ public class PantallaJuego extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		char[][] a = mapa.Funciones.crearNivel(25, 50);
+		char[][] a = mapa.Funciones.crearNivel(20, 50);
 		Mapa mapa = new Mapa(a);
 
 		partida = new Partida( mapa);
@@ -59,7 +59,7 @@ public class PantallaJuego extends JPanel {
 		botonArriba.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				partida = partida.moverJugador(0, partida);
+				partida = Partida.moverJugador(0, partida);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -87,7 +87,7 @@ public class PantallaJuego extends JPanel {
 		botonIzquierda.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				partida = partida.moverJugador(3, partida);
+				partida = Partida.moverJugador(3, partida);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -101,7 +101,7 @@ public class PantallaJuego extends JPanel {
 		botonAbajo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				partida = partida.moverJugador(2, partida);
+				partida = Partida.moverJugador(2, partida);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -115,7 +115,7 @@ public class PantallaJuego extends JPanel {
 		botonDerecha.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				partida = partida.moverJugador(1, partida);
+				partida = Partida.moverJugador(1, partida);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
