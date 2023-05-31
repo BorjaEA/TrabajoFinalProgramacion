@@ -13,11 +13,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import javax.swing.border.LineBorder;
 
+import config.BaseDeDatos;
+import excepciones.NoSeEncuentraSave;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -99,7 +102,16 @@ public class PantallaInicio extends JPanel{
 		ContinuarPartida.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ventana.cambiarAPantalla(PantallaJuego.class);
+				
+				try {
+					BaseDeDatos.comprobarSiExisteSave();
+					ventana.cambiarAPantalla(PantallaJuego.class);
+				} catch (NoSeEncuentraSave e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "DepthsOfDespair", JOptionPane.INFORMATION_MESSAGE);
+					
+				}
+				
+				
 			}
 		});
 		ContinuarPartida.setFont(Ventana.fuente);

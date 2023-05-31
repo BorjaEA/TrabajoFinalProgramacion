@@ -7,6 +7,9 @@ import personaje.Personaje;
 
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
+
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
@@ -24,29 +27,38 @@ public class PantallaJuego extends JPanel {
 
 	public PantallaJuego(Ventana ventana) {
 		this.ventana = ventana;
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		char[][] a = mapa.Funciones.crearNivel(20, 50);
 		Mapa mapa = new Mapa(a);
 
-		Personaje p = new Personaje(0, 0);
-
-		partida = new Partida(p, mapa);
+		partida = new Partida( mapa);
 
 		partida.guardarAArchivo();
 
 		JTextPane textPane = new JTextPane();
+		textPane.setForeground(Color.DARK_GRAY);
+		textPane.setText(partida.devolverMapa());
 		textPane.setEditable(false);
 		GridBagConstraints gbc_textPane = new GridBagConstraints();
+		gbc_textPane.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textPane.insets = new Insets(0, 0, 5, 5);
-		gbc_textPane.gridx = 1;
+		gbc_textPane.gridx = 2;
 		gbc_textPane.gridy = 1;
 		add(textPane, gbc_textPane);
+
+		JButton botonArriba = new JButton("⬆");
+		GridBagConstraints gbc_botonArriba = new GridBagConstraints();
+		gbc_botonArriba.insets = new Insets(0, 0, 5, 5);
+		gbc_botonArriba.gridx = 4;
+		gbc_botonArriba.gridy = 2;
+		add(botonArriba, gbc_botonArriba);
 
 		JButton Atras = new JButton("Atras");
 		Atras.addMouseListener(new MouseAdapter() {
@@ -55,26 +67,41 @@ public class PantallaJuego extends JPanel {
 			}
 		});
 
-		JButton Cargar = new JButton("Cargar partida");
-
-		GridBagConstraints gbc_Cargar = new GridBagConstraints();
-		gbc_Cargar.insets = new Insets(0, 0, 5, 5);
-		gbc_Cargar.gridx = 2;
-		gbc_Cargar.gridy = 1;
-		add(Cargar, gbc_Cargar);
-
-		Cargar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				textPane.setText(partida.devolverMapa());
-			}
-		});
 		GridBagConstraints gbc_Atras = new GridBagConstraints();
+		gbc_Atras.fill = GridBagConstraints.HORIZONTAL;
 		gbc_Atras.insets = new Insets(0, 0, 5, 5);
 		gbc_Atras.gridx = 2;
 		gbc_Atras.gridy = 3;
 		add(Atras, gbc_Atras);
 
+		JButton botonIzquierda = new JButton("⬅");
+		GridBagConstraints gbc_botonIzquierda = new GridBagConstraints();
+		gbc_botonIzquierda.insets = new Insets(0, 0, 5, 5);
+		gbc_botonIzquierda.gridx = 3;
+		gbc_botonIzquierda.gridy = 3;
+		add(botonIzquierda, gbc_botonIzquierda);
+
+		JButton botonAbajo = new JButton("⬇");
+		GridBagConstraints gbc_botonAbajo = new GridBagConstraints();
+		gbc_botonAbajo.insets = new Insets(0, 0, 5, 5);
+		gbc_botonAbajo.gridx = 4;
+		gbc_botonAbajo.gridy = 3;
+		add(botonAbajo, gbc_botonAbajo);
+
+		JButton botonDerecha = new JButton("➡");
+		GridBagConstraints gbc_botonDerecha = new GridBagConstraints();
+		gbc_botonDerecha.insets = new Insets(0, 0, 5, 5);
+		gbc_botonDerecha.gridx = 5;
+		gbc_botonDerecha.gridy = 3;
+		add(botonDerecha, gbc_botonDerecha);
+
 	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		g.drawImage(Ventana.fondo, 0, 0, this.getWidth(), this.getHeight(), new Color(0, 0, 0), null);
+	}
+
 }
