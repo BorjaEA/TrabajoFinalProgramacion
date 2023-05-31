@@ -143,6 +143,19 @@ public class Celda {
 	public void setLetra(char letra) {
 		this.letra = letra;
 	}
+	
+	public void setLetra() {
+		if(this.jugador != null) {
+			this.letra = 'J';
+		}else if(this.enemigo != null) {
+			this.letra = 'E';
+		}else if(this.tienda != null) {
+			this.letra = 'T';
+		}else if(this.herrero != null) {
+			this.letra = 'H';
+		}	
+		
+	}
 	@Override
 	public String toString() {
 		return "Celda ["+ "\n" +"objetosSuelo=" + objetosSuelo + ",\n"+ "letra=" + letra + ",\n"+ "tienda=" + tienda + ",\n"+ "herrero="

@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -35,7 +36,7 @@ public class PantallaJuego extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		char[][] a = mapa.Funciones.crearNivel(20, 50);
+		char[][] a = mapa.Funciones.crearNivel(25, 50);
 		Mapa mapa = new Mapa(a);
 
 		partida = new Partida( mapa);
@@ -44,6 +45,7 @@ public class PantallaJuego extends JPanel {
 
 		JTextPane textPane = new JTextPane();
 		textPane.setForeground(Color.DARK_GRAY);
+		//textPane.setFont( new Font("monospaced", Font.PLAIN, 11) );
 		textPane.setText(partida.devolverMapa());
 		textPane.setEditable(false);
 		GridBagConstraints gbc_textPane = new GridBagConstraints();
@@ -54,6 +56,13 @@ public class PantallaJuego extends JPanel {
 		add(textPane, gbc_textPane);
 
 		JButton botonArriba = new JButton("⬆");
+		botonArriba.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				partida = partida.moverJugador(0, partida);
+				textPane.setText(partida.devolverMapa());
+			}
+		});
 		GridBagConstraints gbc_botonArriba = new GridBagConstraints();
 		gbc_botonArriba.insets = new Insets(0, 0, 5, 5);
 		gbc_botonArriba.gridx = 4;
@@ -75,6 +84,13 @@ public class PantallaJuego extends JPanel {
 		add(Atras, gbc_Atras);
 
 		JButton botonIzquierda = new JButton("⬅");
+		botonIzquierda.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				partida = partida.moverJugador(3, partida);
+				textPane.setText(partida.devolverMapa());
+			}
+		});
 		GridBagConstraints gbc_botonIzquierda = new GridBagConstraints();
 		gbc_botonIzquierda.insets = new Insets(0, 0, 5, 5);
 		gbc_botonIzquierda.gridx = 3;
@@ -82,6 +98,13 @@ public class PantallaJuego extends JPanel {
 		add(botonIzquierda, gbc_botonIzquierda);
 
 		JButton botonAbajo = new JButton("⬇");
+		botonAbajo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				partida = partida.moverJugador(2, partida);
+				textPane.setText(partida.devolverMapa());
+			}
+		});
 		GridBagConstraints gbc_botonAbajo = new GridBagConstraints();
 		gbc_botonAbajo.insets = new Insets(0, 0, 5, 5);
 		gbc_botonAbajo.gridx = 4;
@@ -89,6 +112,13 @@ public class PantallaJuego extends JPanel {
 		add(botonAbajo, gbc_botonAbajo);
 
 		JButton botonDerecha = new JButton("➡");
+		botonDerecha.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				partida = partida.moverJugador(1, partida);
+				textPane.setText(partida.devolverMapa());
+			}
+		});
 		GridBagConstraints gbc_botonDerecha = new GridBagConstraints();
 		gbc_botonDerecha.insets = new Insets(0, 0, 5, 5);
 		gbc_botonDerecha.gridx = 5;
