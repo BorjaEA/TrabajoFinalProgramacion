@@ -8,6 +8,7 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -17,6 +18,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
 
 public class PantallaLogin extends JPanel{
 	private Ventana ventana;
@@ -33,7 +35,8 @@ public class PantallaLogin extends JPanel{
 		setLayout(gridBagLayout);
 		
 		JLabel lblNewLabel_2 = new JLabel("Datos Personales");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_2.setForeground(UIManager.getColor("Button.background"));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 24));
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_2.gridx = 3;
@@ -41,6 +44,9 @@ public class PantallaLogin extends JPanel{
 		add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		JLabel lblNewLabel = new JLabel("Nombre de Usuario");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setForeground(UIManager.getColor("Button.background"));
+		lblNewLabel.setBackground(UIManager.getColor("Button.background"));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 2;
@@ -57,6 +63,8 @@ public class PantallaLogin extends JPanel{
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Contraseña");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1.setForeground(UIManager.getColor("Button.background"));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 2;
@@ -92,11 +100,11 @@ public class PantallaLogin extends JPanel{
 		gbc_botonIrARegistro.gridy = 5;
 		add(botonIrARegistro, gbc_botonIrARegistro);
 		
-		JButton pruebaBoton = new JButton("New button");
+		JButton pruebaBoton = new JButton("Atras");
 		pruebaBoton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ventana.cambiarAPantalla(PantallaInicio.class);
+				ventana.cambiarAPantalla(PantallaElegirLoginORegistrarse.class);
 			}
 		});
 		GridBagConstraints gbc_pruebaBoton = new GridBagConstraints();
@@ -104,6 +112,12 @@ public class PantallaLogin extends JPanel{
 		gbc_pruebaBoton.gridx = 3;
 		gbc_pruebaBoton.gridy = 6;
 		add(pruebaBoton, gbc_pruebaBoton);
+	}
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		g.drawImage(Ventana.fondo, 0, 0, this.getWidth(),this.getHeight(), new Color(0,0,0),null);
 	}
 
 }
