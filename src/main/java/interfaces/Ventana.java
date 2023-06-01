@@ -110,7 +110,13 @@ public class Ventana extends JFrame {
 	}
 
 	public void cambiarAPantalla(Class<PantallaJuego> class1, Partida p) {
-		this.setContentPane(new PantallaJuego(this, p));
+		
+		if(class1.equals(PantallaJuego.class)) {
+			this.setContentPane(new PantallaJuego(this, p));
+		}else if(class1.equals(PantallaPelea.class)) {
+			this.setContentPane(new PantallaPelea(this, p));
+		}
+		
 		
 	}
 	

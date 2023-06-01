@@ -132,6 +132,9 @@ public class Partida {
 			salida.personaje.setPosicionX(x);
 			salida.personaje.setPosicionY(y);
 		}
+		if(p.mapa.mapa[x][y].getLetra() != 'E') {
+			
+		}
 		return salida;
 	}
 
