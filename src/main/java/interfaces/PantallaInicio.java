@@ -21,6 +21,7 @@ import javax.swing.border.LineBorder;
 
 import config.BaseDeDatos;
 import excepciones.NoSeEncuentraSave;
+import partida.Partida;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -104,8 +105,13 @@ public class PantallaInicio extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				
 				try {
+					
 					BaseDeDatos.comprobarSiExisteSave();
-					ventana.cambiarAPantalla(PantallaJuego.class);
+
+					Partida p = new Partida();
+					
+					ventana.cambiarAPantalla(PantallaJuego.class, p);
+
 				} catch (NoSeEncuentraSave e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "DepthsOfDespair", JOptionPane.INFORMATION_MESSAGE);
 					

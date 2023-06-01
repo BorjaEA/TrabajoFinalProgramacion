@@ -15,6 +15,8 @@ import javax.sound.sampled.Clip;
 
 import javax.swing.JFrame;
 
+import partida.Partida;
+
 public class Ventana extends JFrame {
 	static Font fuente;
 	static BufferedImage img = null;
@@ -105,6 +107,11 @@ public class Ventana extends JFrame {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
+	}
+
+	public void cambiarAPantalla(Class<PantallaJuego> class1, Partida p) {
+		this.setContentPane(new PantallaJuego(this, p));
+		
 	}
 	
 	

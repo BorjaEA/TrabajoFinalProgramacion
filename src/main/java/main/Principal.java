@@ -3,6 +3,7 @@ package main;
 
 import interfaces.PantallaInicio;
 import interfaces.Ventana;
+import partida.Partida;
 
 
 public class Principal {
@@ -15,6 +16,9 @@ public class Principal {
 		
 		PantallaInicio i = new PantallaInicio(new Ventana());
 
+
+		
+		
 	}
 
 

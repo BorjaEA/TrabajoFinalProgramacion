@@ -78,33 +78,38 @@ public class Partida {
 		// 2 -> abajo
 		// 3 -> izquierda
 		Partida salida = p;
-		
+
 		int posXoriginal = p.personaje.getPosicionX();
 		int posYoriginal = p.personaje.getPosicionY();
-		
+
 		switch (dirrecion) {
 		case 0 -> {
 			salida = moverJugadorAux(p, p.personaje.getPosicionX(), p.personaje.getPosicionY() - 1);
-			if(salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY() - 1].getLetra() != '░') {
+
+			if (salida.personaje.getPosicionX() != posXoriginal && salida.personaje.getPosicionY() != posYoriginal
+					|| salida.mapa.mapa[posXoriginal][posYoriginal - 1].getLetra() != '░') {
 				salida = moverJugardorAux2(posXoriginal, posYoriginal, salida);
 			}
-			
+
 		}
 		case 1 -> {
 			salida = moverJugadorAux(p, p.personaje.getPosicionX() + 1, p.personaje.getPosicionY());
-			if(salida.mapa.mapa[p.personaje.getPosicionX() + 1][p.personaje.getPosicionY() ].getLetra() != '░') {
+			if (salida.personaje.getPosicionX() != posXoriginal && salida.personaje.getPosicionY() != posYoriginal
+					|| salida.mapa.mapa[posXoriginal + 1][posYoriginal].getLetra() != '░') {
 				salida = moverJugardorAux2(posXoriginal, posYoriginal, salida);
 			}
 		}
 		case 2 -> {
 			salida = moverJugadorAux(p, p.personaje.getPosicionX(), p.personaje.getPosicionY() + 1);
-			if(salida.mapa.mapa[p.personaje.getPosicionX()][p.personaje.getPosicionY() + 1].getLetra() != '░') {
+			if (salida.personaje.getPosicionX() != posXoriginal && salida.personaje.getPosicionY() != posYoriginal
+					|| salida.mapa.mapa[posXoriginal][posYoriginal + 1].getLetra() != '░') {
 				salida = moverJugardorAux2(posXoriginal, posYoriginal, salida);
 			}
 		}
 		case 3 -> {
 			salida = moverJugadorAux(p, p.personaje.getPosicionX() - 1, p.personaje.getPosicionY());
-			if(salida.mapa.mapa[p.personaje.getPosicionX() - 1][p.personaje.getPosicionY()].getLetra() != '░') {
+			if (salida.personaje.getPosicionX() != posXoriginal && salida.personaje.getPosicionY() != posYoriginal
+					|| salida.mapa.mapa[posXoriginal - 1][posYoriginal].getLetra() != '░') {
 				salida = moverJugardorAux2(posXoriginal, posYoriginal, salida);
 			}
 		}
@@ -125,15 +130,13 @@ public class Partida {
 		}
 		return salida;
 	}
-	
+
 	private static Partida moverJugardorAux2(int x, int y, Partida p) {
 		Partida salida = p;
-		
+
 		salida.mapa.mapa[x][y].setJugador(null);
 		salida.mapa.mapa[x][y].setLetra();
 
-		
-		
 		return salida;
 	}
 
@@ -146,20 +149,34 @@ public class Partida {
 				for (int j = 0; j < tam; j++) {
 					linea = reader.readLine();// Lee Celda [
 					linea = reader.readLine();// Lee objetosSuelo
-					this.mapa.mapa[i][j].introducirAObjetosSuelo(linea);
+			        if (!linea.equals("objetosSuelo=null,")) {
+			        	this.mapa.mapa[i][j].introducirAObjetosSuelo(linea);
+			        }
 					linea = reader.readLine();// Lee letra
 					this.mapa.mapa[i][j].setLetra(linea.charAt(6));
 					linea = reader.readLine();// Lee tienda
-					this.mapa.mapa[i][j].setTienda(new Tienda(linea));
+					if (!linea.equals("tienda=null,")) {
+						this.mapa.mapa[i][j].setTienda(new Tienda(linea));
+			        }
+					
+					
 					linea = reader.readLine();// Lee herrero
-					this.mapa.mapa[i][j].setHerrero(new Herrero(linea));
+					if (!linea.equals("herrero=null,")) {
+						this.mapa.mapa[i][j].setHerrero(new Herrero(linea));
+			        }
+					
+					
 					linea = reader.readLine();// Lee enemigo
-					this.mapa.mapa[i][j].setEnemigo(new Enemigo(linea));
+					if (!linea.equals("enemigo=null,")) {
+						this.mapa.mapa[i][j].setEnemigo(new Enemigo(linea));
+			        }
+					
 					linea = reader.readLine();// Lee jugador
 					if (!linea.equals("jugador=null,")) {
 						this.personaje = new Personaje(linea);
+						this.mapa.mapa[i][j].setJugador(new Personaje(linea));
 					}
-					this.mapa.mapa[i][j].setJugador(new Personaje(linea));
+					
 					linea = reader.readLine();// Lee ]
 				}
 			}

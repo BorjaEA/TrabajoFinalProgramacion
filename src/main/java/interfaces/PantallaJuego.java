@@ -126,6 +126,102 @@ public class PantallaJuego extends JPanel {
 		add(botonDerecha, gbc_botonDerecha);
 
 	}
+	public PantallaJuego(Ventana ventana, Partida p) {
+		this.ventana = ventana;
+		this.partida = p;
+
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		setLayout(gridBagLayout);
+
+
+
+		JTextPane textPane = new JTextPane();
+		textPane.setForeground(Color.DARK_GRAY);
+		//textPane.setFont( new Font("monospaced", Font.PLAIN, 11) );
+		textPane.setText(partida.devolverMapa());
+		textPane.setEditable(false);
+		GridBagConstraints gbc_textPane = new GridBagConstraints();
+		gbc_textPane.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textPane.insets = new Insets(0, 0, 5, 5);
+		gbc_textPane.gridx = 2;
+		gbc_textPane.gridy = 1;
+		add(textPane, gbc_textPane);
+
+		JButton botonArriba = new JButton("⬆");
+		botonArriba.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				partida = Partida.moverJugador(0, partida);
+				textPane.setText(partida.devolverMapa());
+			}
+		});
+		GridBagConstraints gbc_botonArriba = new GridBagConstraints();
+		gbc_botonArriba.insets = new Insets(0, 0, 5, 5);
+		gbc_botonArriba.gridx = 4;
+		gbc_botonArriba.gridy = 2;
+		add(botonArriba, gbc_botonArriba);
+
+		JButton Atras = new JButton("Atras");
+		Atras.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				ventana.cambiarAPantalla(PantallaInicio.class);
+			}
+		});
+
+		GridBagConstraints gbc_Atras = new GridBagConstraints();
+		gbc_Atras.fill = GridBagConstraints.HORIZONTAL;
+		gbc_Atras.insets = new Insets(0, 0, 5, 5);
+		gbc_Atras.gridx = 2;
+		gbc_Atras.gridy = 3;
+		add(Atras, gbc_Atras);
+
+		JButton botonIzquierda = new JButton("⬅");
+		botonIzquierda.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				partida = Partida.moverJugador(3, partida);
+				textPane.setText(partida.devolverMapa());
+			}
+		});
+		GridBagConstraints gbc_botonIzquierda = new GridBagConstraints();
+		gbc_botonIzquierda.insets = new Insets(0, 0, 5, 5);
+		gbc_botonIzquierda.gridx = 3;
+		gbc_botonIzquierda.gridy = 3;
+		add(botonIzquierda, gbc_botonIzquierda);
+
+		JButton botonAbajo = new JButton("⬇");
+		botonAbajo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				partida = Partida.moverJugador(2, partida);
+				textPane.setText(partida.devolverMapa());
+			}
+		});
+		GridBagConstraints gbc_botonAbajo = new GridBagConstraints();
+		gbc_botonAbajo.insets = new Insets(0, 0, 5, 5);
+		gbc_botonAbajo.gridx = 4;
+		gbc_botonAbajo.gridy = 3;
+		add(botonAbajo, gbc_botonAbajo);
+
+		JButton botonDerecha = new JButton("➡");
+		botonDerecha.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				partida = Partida.moverJugador(1, partida);
+				textPane.setText(partida.devolverMapa());
+			}
+		});
+		GridBagConstraints gbc_botonDerecha = new GridBagConstraints();
+		gbc_botonDerecha.insets = new Insets(0, 0, 5, 5);
+		gbc_botonDerecha.gridx = 5;
+		gbc_botonDerecha.gridy = 3;
+		add(botonDerecha, gbc_botonDerecha);
+
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
