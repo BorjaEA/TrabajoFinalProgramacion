@@ -25,6 +25,7 @@ import mapa.Mapa;
 public class PantallaJuego extends JPanel {
 	private Ventana ventana;
 	private Partida partida;
+	public static int aux = 0;
 
 	public PantallaJuego(Ventana ventana) {
 		this.ventana = ventana;
@@ -59,7 +60,9 @@ public class PantallaJuego extends JPanel {
 		botonArriba.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				aux = 0;
 				partida = Partida.moverJugador(0, partida);
+				cambiarVentanaSegunCaracter(aux);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -87,7 +90,9 @@ public class PantallaJuego extends JPanel {
 		botonIzquierda.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				aux = 0;
 				partida = Partida.moverJugador(3, partida);
+				cambiarVentanaSegunCaracter(aux);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -101,7 +106,9 @@ public class PantallaJuego extends JPanel {
 		botonAbajo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				aux = 0;
 				partida = Partida.moverJugador(2, partida);
+				cambiarVentanaSegunCaracter(aux);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -115,7 +122,9 @@ public class PantallaJuego extends JPanel {
 		botonDerecha.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				aux = 0;
 				partida = Partida.moverJugador(1, partida);
+				cambiarVentanaSegunCaracter(aux);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -133,6 +142,7 @@ public class PantallaJuego extends JPanel {
 	public PantallaJuego(Ventana ventana, Partida p) {
 		this.ventana = ventana;
 		this.partida = p;
+		
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -159,8 +169,9 @@ public class PantallaJuego extends JPanel {
 		botonArriba.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				aux = 0;
 				partida = Partida.moverJugador(0, partida);
-				
+				cambiarVentanaSegunCaracter(aux);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -189,7 +200,9 @@ public class PantallaJuego extends JPanel {
 		botonIzquierda.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				aux = 0;
 				partida = Partida.moverJugador(3, partida);
+				cambiarVentanaSegunCaracter(aux);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -216,7 +229,9 @@ public class PantallaJuego extends JPanel {
 		botonAbajo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				aux = 0;
 				partida = Partida.moverJugador(2, partida);
+				cambiarVentanaSegunCaracter(aux);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -230,7 +245,9 @@ public class PantallaJuego extends JPanel {
 		botonDerecha.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				aux = 0;
 				partida = Partida.moverJugador(1, partida);
+				cambiarVentanaSegunCaracter(aux);
 				textPane.setText(partida.devolverMapa());
 			}
 		});
@@ -247,6 +264,12 @@ public class PantallaJuego extends JPanel {
 		super.paintComponent(g);
 
 		g.drawImage(Ventana.fondo, 0, 0, this.getWidth(), this.getHeight(), new Color(0, 0, 0), null);
+	}
+	
+	private void cambiarVentanaSegunCaracter(int aux) {
+		if(aux == 1) {
+			ventana.cambiarAPantalla(PantallaPelea.class, partida, partida.mapa.mapa[partida.personaje.getPosicionX()][partida.personaje.getPosicionY()].getEnemigo());
+		}
 	}
 
 }

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Random;
 
+import interfaces.PantallaJuego;
 import mapa.Herrero;
 import mapa.Mapa;
 import mapa.Tienda;
@@ -79,6 +80,14 @@ public class Partida {
 		// 1 -> derecha
 		// 2 -> abajo
 		// 3 -> izquierda
+		
+		// Opcion
+		// 0 -> nada
+		// 1 -> enemigo
+		//
+		//
+		
+		
 		Partida salida = p;
 
 		int posXoriginal = p.personaje.getPosicionX();
@@ -133,7 +142,7 @@ public class Partida {
 			salida.personaje.setPosicionY(y);
 		}
 		if(p.mapa.mapa[x][y].getLetra() != 'E') {
-			
+			//PantallaJuego.aux = 1;
 		}
 		return salida;
 	}

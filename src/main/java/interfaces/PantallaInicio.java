@@ -110,7 +110,7 @@ public class PantallaInicio extends JPanel{
 
 					Partida p = new Partida();
 					
-					ventana.cambiarAPantalla(PantallaJuego.class, p);
+					ventana.cambiarAPantalla(PantallaJuego.class, p, null);
 
 				} catch (NoSeEncuentraSave e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "DepthsOfDespair", JOptionPane.INFORMATION_MESSAGE);

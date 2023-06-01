@@ -14,8 +14,10 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import partida.Partida;
+import personaje.Enemigo;
 
 public class Ventana extends JFrame {
 	static Font fuente;
@@ -109,12 +111,12 @@ public class Ventana extends JFrame {
 	    }
 	}
 
-	public void cambiarAPantalla(Class<PantallaJuego> class1, Partida p) {
+	public void cambiarAPantalla(Class<? extends JPanel> class1, Partida p, Enemigo e) {
 		
 		if(class1.equals(PantallaJuego.class)) {
 			this.setContentPane(new PantallaJuego(this, p));
 		}else if(class1.equals(PantallaPelea.class)) {
-			this.setContentPane(new PantallaPelea(this, p));
+			this.setContentPane(new PantallaPelea(this, p, e));
 		}
 		
 		
