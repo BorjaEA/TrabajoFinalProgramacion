@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Random;
 
 import mapa.Herrero;
@@ -28,12 +29,13 @@ public class Partida {
 
 	public Partida(Mapa mapa) {
 		this.mapa = mapa;
-		generarJugador();
+		this.generarJugador();
 
 	}
 
 	public Partida() {
 		abrirPartidaGuardada();
+
 	}
 
 	public void guardarAArchivo() {
@@ -115,6 +117,7 @@ public class Partida {
 		}
 
 		}
+
 		return salida;
 
 	}
@@ -124,6 +127,7 @@ public class Partida {
 
 		if (p.mapa.mapa[x][y].getLetra() != '░') {
 			salida.mapa.mapa[x][y].setLetra('J');
+			salida.mapa.mapa[x][y].setJugador(p.personaje);
 			salida.personaje = p.personaje;
 			salida.personaje.setPosicionX(x);
 			salida.personaje.setPosicionY(y);
@@ -149,34 +153,32 @@ public class Partida {
 				for (int j = 0; j < tam; j++) {
 					linea = reader.readLine();// Lee Celda [
 					linea = reader.readLine();// Lee objetosSuelo
-			        if (!linea.equals("objetosSuelo=null,")) {
-			        	this.mapa.mapa[i][j].introducirAObjetosSuelo(linea);
-			        }
+					if (!linea.equals("objetosSuelo=null,") && !linea.equals("objetosSuelo=[],")) {
+						this.mapa.mapa[i][j].introducirAObjetosSuelo(linea);
+					}
 					linea = reader.readLine();// Lee letra
 					this.mapa.mapa[i][j].setLetra(linea.charAt(6));
 					linea = reader.readLine();// Lee tienda
 					if (!linea.equals("tienda=null,")) {
 						this.mapa.mapa[i][j].setTienda(new Tienda(linea));
-			        }
-					
-					
+					}
+
 					linea = reader.readLine();// Lee herrero
 					if (!linea.equals("herrero=null,")) {
 						this.mapa.mapa[i][j].setHerrero(new Herrero(linea));
-			        }
-					
-					
+					}
+
 					linea = reader.readLine();// Lee enemigo
 					if (!linea.equals("enemigo=null,")) {
 						this.mapa.mapa[i][j].setEnemigo(new Enemigo(linea));
-			        }
-					
+					}
+
 					linea = reader.readLine();// Lee jugador
 					if (!linea.equals("jugador=null,")) {
 						this.personaje = new Personaje(linea);
 						this.mapa.mapa[i][j].setJugador(new Personaje(linea));
 					}
-					
+
 					linea = reader.readLine();// Lee ]
 				}
 			}
@@ -209,6 +211,24 @@ public class Partida {
 
 		return salida;
 
+	}
+
+	public boolean hayJugador() {
+		boolean a = false;
+		for (int i = 0; i < mapa.mapa.length; i++) {
+			for (int j = 0; j < mapa.mapa.length; j++) {
+				if (mapa.mapa[i][j].getJugador() != null) {
+					a = true;
+				}
+			}
+		}
+
+		return a;
+	}
+
+	@Override
+	public String toString() {
+		return "Partida [personaje=" + personaje + "]";
 	}
 
 }

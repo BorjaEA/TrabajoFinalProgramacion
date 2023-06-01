@@ -10,7 +10,7 @@ import personaje.Personaje;
 
 public class Celda {
 	
-	public ArrayList<Objeto> objetosSuelo = new ArrayList<>();
+	public ArrayList<Objeto> objetosSuelo = null;
 	private char letra;
 	private Tienda tienda;
 	private Herrero herrero;
@@ -79,7 +79,7 @@ public class Celda {
 	public void introducirAObjetosSuelo(String input) {
 		
         // Verificar si es nulo
-        if (input.equals("objetosSuelo=null,")) {
+        if (input.equals("objetosSuelo=null,") || input.equals("objetosSuelo=[],")) {
             return;
         }
         this.objetosSuelo = new ArrayList<>();
