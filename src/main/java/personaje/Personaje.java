@@ -126,12 +126,12 @@ public class Personaje extends EntidadConAtributos{
 		}
 	}
 	public String toString2LaSecuela() {
-		return "Personaje \n [fuerza=" + fuerza + ",\n inteligencia=" + inteligencia + ",\n destreza=" + destreza
-				+ ",\n manaTotal=" + manaTotal + ",\n manaActual=" + manaActual + ",\n regeneracionVida=" + regeneracionVida
-				+ ",\n regeneracionMana=" + regeneracionMana + ",\n nivel=" + nivel + ",\n exp=" + exp + ",\n vidaTotal="
-				+ vidaTotal + ", vidaActual=" + vidaActual + ", ataque=" + ataque + ", defensa=" + defensa
-				+ ",\n posicionX=" + posicionX + ",\n posicionY=" + posicionY + "]";
+		return "Personaje \nfuerza=" + fuerza + "\ninteligencia=" + inteligencia + "\ndestreza=" + destreza
+				+ "\nnivel=" + nivel + "\nexp=" + exp + "\nvidaTotal="
+				+ vidaTotal + "\nvidaActual=" + vidaActual + "\nataque=" + ataque + "\ndefensa=" + defensa
+				+ "\nposicionX=" + posicionX + "\nposicionY=" + posicionY + "";
 	}
+	
 
 	@Override
 	public String toString() {

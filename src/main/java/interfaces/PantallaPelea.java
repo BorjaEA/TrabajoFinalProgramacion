@@ -12,14 +12,15 @@ import java.awt.GridBagLayout;
 import javax.swing.JTextArea;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.JButton;
 
 public class PantallaPelea extends JPanel{
 	
 	private Ventana ventana;
 	private Partida partida;
 	
-	public PantallaPelea(Ventana ventana, Partida partida, Enemigo enemigo) {
-		this.ventana = ventana;
+	public PantallaPelea(Ventana v, Partida partida, Enemigo e) {
+		this.ventana = v;
 		this.partida = partida;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
@@ -37,12 +38,26 @@ public class PantallaPelea extends JPanel{
 		add(jugador, gbc_jugador);
 		
 		JTextArea textoEmigo = new JTextArea();
-		//textoEmigo.setText(enemigo.toString());
+		textoEmigo.setText(e.toString2LaSecuela());
 		GridBagConstraints gbc_textoEmigo = new GridBagConstraints();
 		gbc_textoEmigo.insets = new Insets(0, 0, 5, 5);
 		gbc_textoEmigo.gridx = 4;
 		gbc_textoEmigo.gridy = 1;
 		add(textoEmigo, gbc_textoEmigo);
+		
+		JButton Atacar = new JButton("Atacar");
+		GridBagConstraints gbc_Atacar = new GridBagConstraints();
+		gbc_Atacar.insets = new Insets(0, 0, 5, 5);
+		gbc_Atacar.gridx = 1;
+		gbc_Atacar.gridy = 2;
+		add(Atacar, gbc_Atacar);
+		
+		JButton Huir = new JButton("Huir");
+		GridBagConstraints gbc_Huir = new GridBagConstraints();
+		gbc_Huir.insets = new Insets(0, 0, 5, 5);
+		gbc_Huir.gridx = 4;
+		gbc_Huir.gridy = 2;
+		add(Huir, gbc_Huir);
 		
 		
 	}

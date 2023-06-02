@@ -49,6 +49,15 @@ public class Enemigo extends EntidadConAtributos{
 		this.vidaActual = this.vidaTotal;
 	}
 
+	public String toString2LaSecuela() {
+		
+		return "Enemigo \nvidaTotal=" + vidaTotal + " \nvidaActual=" + vidaActual + "\nataque=" + ataque + "\ndefensa="
+				+ defensa + "\nposicionX=" + posicionX + "\nposicionY=" + posicionY + "";
+		
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Enemigo [vidaTotal=" + vidaTotal + ", vidaActual=" + vidaActual + ", ataque=" + ataque + ", defensa="

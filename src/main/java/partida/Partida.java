@@ -133,7 +133,9 @@ public class Partida {
 
 	private static Partida moverJugadorAux(Partida p, int x, int y) {
 		Partida salida = p;
-
+		if(p.mapa.mapa[x][y].getLetra() == 'E') {
+			PantallaJuego.aux = 1;
+		}
 		if (p.mapa.mapa[x][y].getLetra() != '░') {
 			salida.mapa.mapa[x][y].setLetra('J');
 			salida.mapa.mapa[x][y].setJugador(p.personaje);
@@ -141,9 +143,7 @@ public class Partida {
 			salida.personaje.setPosicionX(x);
 			salida.personaje.setPosicionY(y);
 		}
-		if(p.mapa.mapa[x][y].getLetra() != 'E') {
-			//PantallaJuego.aux = 1;
-		}
+
 		return salida;
 	}
 

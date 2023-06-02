@@ -196,7 +196,7 @@ public class Funciones {
 	}
 
     /**
-     * Añade los elementos "🚪", "😡", "🏠" y "🔨" al mapa en las posiciones adecuadas.
+     * Añade los elementos "S", "E", "T" y "H" al mapa en las posiciones adecuadas.
      *
      * @param mapa el mapa actual
      * @return el mapa actualizado
