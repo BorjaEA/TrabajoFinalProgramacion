@@ -7,7 +7,7 @@ public class Mapa {
 
 	public Celda[][] mapa;
 	
-	private static short numeroPiso = 1;
+	public static short numeroPiso = 1;
 	
 	public Mapa(int tam) {
 		this.mapa = new Celda[tam][tam];

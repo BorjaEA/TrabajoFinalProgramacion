@@ -133,9 +133,13 @@ public class Partida {
 
 	private static Partida moverJugadorAux(Partida p, int x, int y) {
 		Partida salida = p;
-		if(p.mapa.mapa[x][y].getLetra() == 'E') {
-			PantallaJuego.aux = 1;
+		
+		switch (p.mapa.mapa[x][y].getLetra()) {
+		case 'E' -> PantallaJuego.aux = 1;
+		case 'S' -> PantallaJuego.aux = 2;
+
 		}
+
 		if (p.mapa.mapa[x][y].getLetra() != '░') {
 			salida.mapa.mapa[x][y].setLetra('J');
 			salida.mapa.mapa[x][y].setJugador(p.personaje);

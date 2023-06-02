@@ -272,11 +272,21 @@ public class PantallaJuego extends JPanel {
 	}
 	
 	private void cambiarVentanaSegunCaracter(int aux) {
-		if(aux == 1) {
+		
+		switch (aux) {
+		case 1 ->{
 			Enemigo e = partida.mapa.mapa[partida.personaje.getPosicionX()][partida.personaje.getPosicionY()].getEnemigo();
-
 			ventana.cambiarAPantalla( PantallaPelea.class, partida, e);
 		}
+		case 2->{
+			char[][] a = mapa.Funciones.crearNivel(20, 50);
+			ventana.cambiarAPantalla( PantallaJuego.class, new Partida( new Mapa(a)), null);
+		}
+		
+		
+		
+		}
+
 	}
 
 }
