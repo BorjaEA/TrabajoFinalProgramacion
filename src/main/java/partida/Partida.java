@@ -39,6 +39,11 @@ public class Partida {
 
 	}
 
+	public Partida(String ruta) {
+		abrirPartidaGuardada(ruta);
+
+	}
+
 	public void guardarAArchivo() {
 
 		try {
@@ -48,6 +53,22 @@ public class Partida {
 			BufferedWriter writer = new BufferedWriter(new FileWriter("./Partidas guardadas/save.txt"));
 			writer.write(mapa.mapa.length + "\n");
 			writer.write(this.mapa.informacionMapaAString());
+			writer.flush();
+
+			writer.close();
+		} catch (Exception e) {
+
+		}
+
+	}
+	public static void guardarAArchivo(String ruta, String contenido) {
+
+		try {
+			File carpeta = new File("./Partidas guardadas");
+			carpeta.mkdir();
+
+			BufferedWriter writer = new BufferedWriter(new FileWriter(ruta));
+			writer.write(contenido);
 			writer.flush();
 
 			writer.close();
@@ -80,14 +101,13 @@ public class Partida {
 		// 1 -> derecha
 		// 2 -> abajo
 		// 3 -> izquierda
-		
+
 		// Opcion
 		// 0 -> nada
 		// 1 -> enemigo
 		//
 		//
-		
-		
+
 		Partida salida = p;
 
 		int posXoriginal = p.personaje.getPosicionX();
@@ -133,7 +153,7 @@ public class Partida {
 
 	private static Partida moverJugadorAux(Partida p, int x, int y) {
 		Partida salida = p;
-		
+
 		switch (p.mapa.mapa[x][y].getLetra()) {
 		case 'E' -> PantallaJuego.aux = 1;
 		case 'S' -> PantallaJuego.aux = 2;
@@ -162,6 +182,50 @@ public class Partida {
 
 	public void abrirPartidaGuardada() {
 		try (BufferedReader reader = new BufferedReader(new FileReader("./Partidas guardadas/save.txt"))) {
+			String linea = reader.readLine();
+			int tam = Integer.parseInt(linea);
+			this.mapa = new Mapa(tam);
+			for (int i = 0; i < tam; i++) {
+				for (int j = 0; j < tam; j++) {
+					linea = reader.readLine();// Lee Celda [
+					linea = reader.readLine();// Lee objetosSuelo
+					if (!linea.equals("objetosSuelo=null,") && !linea.equals("objetosSuelo=[],")) {
+						this.mapa.mapa[i][j].introducirAObjetosSuelo(linea);
+					}
+					linea = reader.readLine();// Lee letra
+					this.mapa.mapa[i][j].setLetra(linea.charAt(6));
+					linea = reader.readLine();// Lee tienda
+					if (!linea.equals("tienda=null,")) {
+						this.mapa.mapa[i][j].setTienda(new Tienda(linea));
+					}
+
+					linea = reader.readLine();// Lee herrero
+					if (!linea.equals("herrero=null,")) {
+						this.mapa.mapa[i][j].setHerrero(new Herrero(linea));
+					}
+
+					linea = reader.readLine();// Lee enemigo
+					if (!linea.equals("enemigo=null,")) {
+						this.mapa.mapa[i][j].setEnemigo(new Enemigo(linea));
+					}
+
+					linea = reader.readLine();// Lee jugador
+					if (!linea.equals("jugador=null,")) {
+						this.personaje = new Personaje(linea);
+						this.mapa.mapa[i][j].setJugador(new Personaje(linea));
+					}
+
+					linea = reader.readLine();// Lee ]
+				}
+			}
+
+		} catch (IOException e) {
+			System.out.println("Ocurrió un error al leer el archivo: " + e.getMessage());
+		}
+	}
+
+	public void abrirPartidaGuardada(String ruta) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(ruta))) {
 			String linea = reader.readLine();
 			int tam = Integer.parseInt(linea);
 			this.mapa = new Mapa(tam);

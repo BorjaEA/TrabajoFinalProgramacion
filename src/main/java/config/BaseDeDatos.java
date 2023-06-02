@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
+import excepciones.NoExisteUsuarioException;
 import excepciones.NoSeEncuentraSave;
 
 public class BaseDeDatos {
@@ -25,16 +26,15 @@ public class BaseDeDatos {
 	public static final String usuarioBD = "root";
 	public static final String passBD = "";
 
-	public static ResultSet consultar(String query) {
+	public static ResultSet consultar(Connection conn,String query) {
 		// Conectar y crear un statement
 		// hacer la consulta que diga query. Si es un select, hacerlo con executeQuery,
 		// y devolver el resultset que la funcion te devuelve
 		// Si no es un select, hacerlo con executeUpdate, y devlover null del tirón.
 		// cerrar statement
 		// cerrar conexion
-		try (Connection conn = DriverManager.getConnection(cadenaConexion, usuarioBD, passBD);
-				Statement stmt = conn.createStatement();) {
-
+		try  {
+			Statement stmt = conn.createStatement();
 			if (query.contains("SELECT") || query.contains("select")) {
 				return stmt.executeQuery(query);
 			} else {
@@ -201,6 +201,14 @@ public class BaseDeDatos {
 			throw new NoSeEncuentraSave("No se ha encontrado partida guardada");
 		}
 	
+	}
+	
+	public static boolean existeUsuario(String nombre, String contra) throws NoExisteUsuarioException {
+		if(!BaseDeDatos.comprobarUsuario(nombre) || !BaseDeDatos.comprobarContraseña(nombre, contra)) {
+			throw new NoExisteUsuarioException("El usuario introducido no existe");
+		}
+		
+		return true;
 	}
 
 }
