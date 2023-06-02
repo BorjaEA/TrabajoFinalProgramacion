@@ -24,6 +24,38 @@ public class EntidadConAtributos {
 		this.posicionY = posicionY;
 	}
 
+	public float getVidaTotal() {
+		return vidaTotal;
+	}
+
+	public void setVidaTotal(float vidaTotal) {
+		this.vidaTotal = vidaTotal;
+	}
+
+	public float getVidaActual() {
+		return vidaActual;
+	}
+
+	public void setVidaActual(float vidaActual) {
+		this.vidaActual = vidaActual;
+	}
+
+	public float getAtaque() {
+		return ataque;
+	}
+
+	public void setAtaque(float ataque) {
+		this.ataque = ataque;
+	}
+
+	public float getDefensa() {
+		return defensa;
+	}
+
+	public void setDefensa(float defensa) {
+		this.defensa = defensa;
+	}
+
 	public EntidadConAtributos(int posicionX, int posicionY) {
 		this.vidaTotal = 100;
 		this.vidaActual = this.vidaTotal;

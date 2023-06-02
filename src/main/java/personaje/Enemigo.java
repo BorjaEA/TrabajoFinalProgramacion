@@ -7,6 +7,7 @@ public class Enemigo extends EntidadConAtributos{
             // Si el string indica que el enemigo es null, se puede dejar los atributos con sus valores por defecto.
             return;
         }
+        
 
         String[] atributos = datos.substring(datos.indexOf("[") + 1, datos.indexOf("]")).split(", ");
 
@@ -43,17 +44,15 @@ public class Enemigo extends EntidadConAtributos{
     }
 	public Enemigo(int posicionX, int posicionY,short piso) {
 		super(posicionX, posicionY);
-		this.ataque = 20 * piso;
+		this.ataque = 15 * piso;
 		this.defensa = 5 * piso;
-		this.vidaTotal = 100 * piso;
+		this.vidaTotal = 75 * piso;
 		this.vidaActual = this.vidaTotal;
 	}
 
 	public String toString2LaSecuela() {
 		
-		return "Enemigo \nvidaTotal=" + vidaTotal + " \nvidaActual=" + vidaActual + "\nataque=" + ataque + "\ndefensa="
-				+ defensa + "\nposicionX=" + posicionX + "\nposicionY=" + posicionY + "";
-		
+		return "Enemigo \nVida: " + vidaActual + "/" + vidaTotal + "\n" + "Ataque: "+ataque + "\n"+ "Defensa: "+ defensa;
 	}
 	
 	
