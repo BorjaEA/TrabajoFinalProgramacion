@@ -41,7 +41,7 @@ public class Ventana extends JFrame {
 
 		try {
 			// load a custom font in your project folder
-			fuente = Font.createFont(Font.TRUETYPE_FONT, new File("./light-pixel-7.regular.ttf")).deriveFont(45f);
+			fuente = Font.createFont(Font.TRUETYPE_FONT, new File("./light-pixel-7.regular.ttf")).deriveFont(40f);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("./light-pixel-7.regular.ttf")));
 		} catch (IOException | FontFormatException e) {

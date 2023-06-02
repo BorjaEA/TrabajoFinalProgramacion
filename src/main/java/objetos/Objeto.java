@@ -3,7 +3,7 @@ package objetos;
 import java.util.Random;
 
 public class Objeto {
-	private Random ran = new Random();
+	protected static Random ran = new Random();
 	protected float valor = ran.nextInt(1,10);
 	protected String nombre;
 	

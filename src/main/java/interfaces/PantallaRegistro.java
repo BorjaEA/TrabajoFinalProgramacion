@@ -10,6 +10,10 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 
 import config.BaseDeDatos;
+import config.Usuario;
+import excepciones.NoSeEncuentraSave;
+import mapa.Mapa;
+import partida.Partida;
 
 import javax.swing.JButton;
 
@@ -18,6 +22,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import javax.swing.JPasswordField;
 import javax.swing.UIManager;
@@ -91,10 +100,15 @@ public class PantallaRegistro extends JPanel{
 				
 				
 				if (!BaseDeDatos.comprobarUsuario(campoNombre.getText().toString())) {
-					datosAIntroducir.add(campoNombre.getText().toString());
-					datosAIntroducir.add(campoContraseña.getText().toString());
-					BaseDeDatos.insertar("usuario", datosAIntroducir);
-					JOptionPane.showMessageDialog(null, "Se creo el usuario de manera correcta", "DepthsOfDespair", JOptionPane.INFORMATION_MESSAGE);
+					Usuario u = null;
+					JOptionPane.showMessageDialog(null, "Se ha Creado usuario con exito", "DepthsOfDespair",JOptionPane.INFORMATION_MESSAGE);
+					Partida p = cargarPartidaOnlineOLocar(u, false);
+					p.guardarAArchivo();
+					u = new Usuario(campoNombre.getText().toString(), campoContraseña.getText().toString());
+					u.insertarPartida(p);
+					ventana.cambiarAPantallaconUsuario(PantallaJuego.class, p, u);
+
+					
 					ventana.cambiarAPantalla(PantallaJuego.class);
 					
 				}else {
@@ -132,6 +146,56 @@ public class PantallaRegistro extends JPanel{
 
 		g.drawImage(Ventana.fondo, 0, 0, this.getWidth(),this.getHeight(), new Color(0,0,0),null);
 	}
+	private Partida cargarPartidaOnlineOLocar(Usuario u, boolean opcion) {
+		if (!opcion) {
+			char[][] a = mapa.Funciones.crearNivel(20, 50);
+			Mapa mapa = new Mapa(a);
+			Partida p = new Partida(mapa);
 
+			return p;
+		}
+		String query = "select partidaguardada.partida from partidaguardada inner join usuario_partidaguardada where id_usuario = '";
+		query += u.getNombre();
+		query += "' and partidaguardada.id = id_partidaGuardada;";
+
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(BaseDeDatos.cadenaConexion, BaseDeDatos.usuarioBD, BaseDeDatos.passBD);
+
+			ResultSet rs = BaseDeDatos.consultar(conn, query);
+			if (rs.next()) {
+				String primerElemento = rs.getString(1);
+				Partida.guardarAArchivo("./Partidas guardadas/tmp.txt", primerElemento);
+				Partida p = new Partida("./Partidas guardadas/tmp.txt");
+				conn.close(); // Cerrar la conexión antes de devolver el resultado
+				return p;
+			} else {
+				try {
+					BaseDeDatos.comprobarSiExisteSave();
+					Partida p = new Partida();
+					conn.close(); // Cerrar la conexión antes de devolver el resultado
+					return p;
+				} catch (NoSeEncuentraSave e) {
+					char[][] a = mapa.Funciones.crearNivel(20, 50);
+					Mapa mapa = new Mapa(a);
+					Partida p = new Partida(mapa);
+					conn.close(); // Cerrar la conexión antes de devolver el resultado
+					return p;
+				}
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close(); // Cerrar la conexión en caso de excepción
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return null;
+	}
 	
 }

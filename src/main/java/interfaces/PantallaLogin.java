@@ -1,6 +1,8 @@
 package interfaces;
 
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 
@@ -21,6 +23,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
@@ -39,7 +42,7 @@ import javax.swing.UIManager;
 
 public class PantallaLogin extends JPanel {
 	private Ventana ventana;
-	private JTextField campoContraseña;
+	private JPasswordField campoContraseña;
 	private JTextField campoNombre;
 
 	public PantallaLogin(Ventana v) {
@@ -88,7 +91,7 @@ public class PantallaLogin extends JPanel {
 		gbc_lblNewLabel_1.gridy = 3;
 		add(lblNewLabel_1, gbc_lblNewLabel_1);
 
-		campoContraseña = new JTextField();
+		campoContraseña  = new JPasswordField();
 		GridBagConstraints gbc_campoContraseña = new GridBagConstraints();
 		gbc_campoContraseña.insets = new Insets(0, 0, 5, 5);
 		gbc_campoContraseña.fill = GridBagConstraints.HORIZONTAL;
@@ -103,17 +106,16 @@ public class PantallaLogin extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				// if (BaseDeDatos.comprobarUsuario(campoNombre.getText().toString()) &&
-				// BaseDeDatos.comprobarContraseña(campoNombre.getText().toString(),
-				// campoContraseña.getText().toString())) {
+	
 				try {
-					if (BaseDeDatos.existeUsuario(campoNombre.getText().toString(),
-							campoContraseña.getText().toString())) {
+					if (BaseDeDatos.existeUsuario(campoNombre.getText().toString(),campoContraseña.getText().toString())) {
 						JOptionPane.showMessageDialog(null, "Se ha iniciado sesion con exito", "DepthsOfDespair",
 								JOptionPane.INFORMATION_MESSAGE);
 						Usuario u = new Usuario(campoNombre.getText().toString(), campoNombre.getText().toString());
-						Partida p = cargarPartidaOnlineOLocar(u);
-						u.insertarPartida(p);
+						Partida p = cargarPartidaOnlineOLocar(u, true);
+						p.guardarAArchivo();
+
+						
 						ventana.cambiarAPantallaconUsuario(PantallaJuego.class, p, u);
 					} else {
 						JOptionPane.showMessageDialog(null,
@@ -161,7 +163,11 @@ public class PantallaLogin extends JPanel {
 							campoContraseña.getText().toString())) {
 						JOptionPane.showMessageDialog(null, "Se ha iniciado sesion con exito", "DepthsOfDespair",
 								JOptionPane.INFORMATION_MESSAGE);
-						ventana.cambiarAPantalla(PantallaJuego.class);
+						Usuario u = new Usuario(campoNombre.getText().toString(), campoNombre.getText().toString());
+						Partida p = cargarPartidaOnlineOLocar(u, false);
+						p.guardarAArchivo();
+
+						ventana.cambiarAPantallaconUsuario(PantallaJuego.class, p, u);
 					} else {
 						JOptionPane.showMessageDialog(null,
 								"Hubo un problema al iniciar sesion \nNombre de usuario o contraseña incorrecta",
@@ -201,49 +207,57 @@ public class PantallaLogin extends JPanel {
 		g.drawImage(Ventana.fondo, 0, 0, this.getWidth(), this.getHeight(), new Color(0, 0, 0), null);
 	}
 
-	private Partida cargarPartidaOnlineOLocar(Usuario u) {
-	    String query = "select partidaguardada.partida from partidaguardada inner join usuario_partidaguardada where id_usuario = '";
-	    query += u.getNombre();
-	    query += "' and partidaguardada.id = id_partidaGuardada;";
+	private Partida cargarPartidaOnlineOLocar(Usuario u, boolean opcion) {
+		if (!opcion) {
+			char[][] a = mapa.Funciones.crearNivel(20, 50);
+			Mapa mapa = new Mapa(a);
+			Partida p = new Partida(mapa);
 
-	    Connection conn = null;
-	    try {
-	        conn = DriverManager.getConnection(BaseDeDatos.cadenaConexion, BaseDeDatos.usuarioBD, BaseDeDatos.passBD);
+			return p;
+		}
+		String query = "select partidaguardada.partida from partidaguardada inner join usuario_partidaguardada where id_usuario = '";
+		query += u.getNombre();
+		query += "' and partidaguardada.id = id_partidaGuardada;";
 
-	        ResultSet rs = BaseDeDatos.consultar(conn, query);
-	        if (rs.next()) {
-	            String primerElemento = rs.getString(1);
-	            Partida.guardarAArchivo("./Partidas guardadas/tmp.txt", primerElemento);
-	            Partida p = new Partida("./Partidas guardadas/tmp.txt");
-	            conn.close(); // Cerrar la conexión antes de devolver el resultado
-	            return p;
-	        } else {
-	            try {
-	                BaseDeDatos.comprobarSiExisteSave();
-	                Partida p = new Partida();
-	                conn.close(); // Cerrar la conexión antes de devolver el resultado
-	                return p;
-	            } catch (NoSeEncuentraSave e) {
-	                char[][] a = mapa.Funciones.crearNivel(20, 50);
-	                Mapa mapa = new Mapa(a);
-	                Partida p = new Partida(mapa);
-	                conn.close(); // Cerrar la conexión antes de devolver el resultado
-	                return p;
-	            }
-	        }
-	    } catch (SQLException e1) {
-	        e1.printStackTrace();
-	    } finally {
-	        try {
-	            if (conn != null) {
-	                conn.close(); // Cerrar la conexión en caso de excepción
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(BaseDeDatos.cadenaConexion, BaseDeDatos.usuarioBD, BaseDeDatos.passBD);
 
-	    return null;
+			ResultSet rs = BaseDeDatos.consultar(conn, query);
+			if (rs.next()) {
+				String primerElemento = rs.getString(1);
+				Partida.guardarAArchivo("./Partidas guardadas/tmp.txt", primerElemento);
+				Partida p = new Partida("./Partidas guardadas/tmp.txt");
+				conn.close(); // Cerrar la conexión antes de devolver el resultado
+				return p;
+			} else {
+				try {
+					BaseDeDatos.comprobarSiExisteSave();
+					Partida p = new Partida();
+					conn.close(); // Cerrar la conexión antes de devolver el resultado
+					return p;
+				} catch (NoSeEncuentraSave e) {
+					char[][] a = mapa.Funciones.crearNivel(20, 50);
+					Mapa mapa = new Mapa(a);
+					Partida p = new Partida(mapa);
+					conn.close(); // Cerrar la conexión antes de devolver el resultado
+					u.insertarPartida(p);
+					return p;
+				}
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close(); // Cerrar la conexión en caso de excepción
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return null;
 	}
 
 }

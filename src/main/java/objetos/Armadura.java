@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Armadura extends Equipamiento{
-	protected static Random ran = new Random();
 	protected int defensa;
 		
     static private List<String> nombreArmaduras = Arrays.asList(

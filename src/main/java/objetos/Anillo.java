@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Anillo extends Equipamiento{
-	static private Random ran = new Random();
+
 	private int regeneracionVida, regeneracionMana;
     static private List<String> nombreAnillos = Arrays.asList(
             "Andvaranaut",

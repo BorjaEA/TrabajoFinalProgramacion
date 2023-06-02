@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 import com.mysql.cj.protocol.Resultset;
@@ -14,8 +15,8 @@ import com.mysql.cj.protocol.Resultset;
 import partida.Partida;
 
 public class Usuario {
-	String nombre = "";
-	String contraseña = "";
+	private String nombre = "";
+	private String contraseña = "";
 
 	public String getNombre() {
 		return nombre;

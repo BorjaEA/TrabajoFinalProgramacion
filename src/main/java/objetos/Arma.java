@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Arma extends Equipamiento{
-	private static Random ran = new Random();
+
 	private float daño;
     static private List<String> nombreParaArmas = Arrays.asList(
             "Excalibur",

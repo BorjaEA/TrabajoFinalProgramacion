@@ -297,7 +297,8 @@ public class PantallaJuego extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		JLabel usuarioNombre = new JLabel("Usuario: " + u.getNombre());
+		JTextPane usuarioNombre = new JTextPane();
+		usuarioNombre.setText("Usuario: " + u.getNombre());
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 0;
